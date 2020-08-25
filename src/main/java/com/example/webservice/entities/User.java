@@ -1,13 +1,18 @@
 package com.example.webservice.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_user") //tivemos que criar desta forma pois deu erro no build, deu conflito com o Banco de Dados (palavra ORDER é reservada do SQL)
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -18,6 +23,11 @@ public class User implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
+	
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
+	
+	//nunca colocamos Set para coleção, pois nao vamos modificá-las
 	
 	public User() {
 	}
@@ -71,6 +81,10 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -95,6 +109,7 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
+
 	
 	
 }
