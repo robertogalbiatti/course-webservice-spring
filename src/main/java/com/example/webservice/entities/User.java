@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_user") //tivemos que criar desta forma pois deu erro no build, deu conflito com o Banco de Dados (palavra ORDER é reservada do SQL)
 public class User implements Serializable{
@@ -24,6 +26,7 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
